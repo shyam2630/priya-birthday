@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Priya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon-deep:#2c0510;
+    --maroon:#4a0e1c;
+    --maroon-light:#6e1526;
+    --gold:#d4af37;
+    --gold-light:#f2d998;
+    --gold-soft:#e6c874;
+    --cream:#faf1de;
+    --ink:#2a0a10;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:
+      radial-gradient(ellipse at 50% -10%, #7a1b2c 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 110%, #1c0208 0%, transparent 60%),
+      linear-gradient(180deg, var(--maroon-deep), var(--ink) 100%);
+    font-family:'Cormorant Garamond', serif;
+    color:var(--cream);
+    overflow:hidden;
+  }
+
+  .stage{
+    position:relative;
+    width:100%;
+    height:100vh;
+    height:100svh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    perspective:1600px;
+    padding:44px 14px 70px;
+  }
+
+  /* ambient gold dust */
+  .dust{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+  }
+  .dust span{
+    position:absolute;
+    width:3px;height:3px;
+    background:var(--gold-light);
+    border-radius:50%;
+    opacity:0.55;
+    box-shadow:0 0 6px 1px var(--gold-light);
+    animation:drift 9s linear infinite;
+  }
+  @keyframes drift{
+    0%{ transform:translateY(0) translateX(0); opacity:0;}
+    10%{opacity:.6;}
+    90%{opacity:.4;}
+    100%{ transform:translateY(-110vh) translateX(20px); opacity:0;}
+  }
+
+  .card-wrap{
+    position:relative;
+    width:min(90vw, 460px);
+    height:100%;
+    max-height:640px;
+    z-index:2;
+  }
+
+  .slide{
+    position:absolute;
+    inset:0;
+    display:none;
+    flex-direction:column;
+    border-radius:22px;
+    background:
+      radial-gradient(ellipse at 50% 0%, #5c1424 0%, var(--maroon) 60%, var(--maroon-deep) 100%);
+    border:2px solid var(--gold);
+    box-shadow:
+      0 0 0 6px rgba(212,175,55,0.12),
+      0 20px 60px rgba(0,0,0,0.55),
+      inset 0 0 40px rgba(212,175,55,0.06);
+    padding:34px 30px;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    backface-visibility:hidden;
+    transform-style:preserve-3d;
+    overflow-y:auto;
+    scrollbar-width:none;
+  }
+  .slide::-webkit-scrollbar{ display:none; }
+  .slide.active{ display:flex; }
+  .slide.turn-out{
+    animation:turnOut .5s ease forwards;
+  }
+  .slide.turn-in{
+    animation:turnIn .5s ease forwards;
+  }
+  @keyframes turnOut{
+    from{ transform:rotateY(0deg); opacity:1; }
+    to{ transform:rotateY(-95deg); opacity:0; }
+  }
+  @keyframes turnIn{
+    from{ transform:rotateY(95deg); opacity:0; }
+    to{ transform:rotateY(0deg); opacity:1; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .slide.turn-out, .slide.turn-in{ animation:none; }
+  }
+
+  /* corner ornaments */
+  .corner{
+    position:absolute;
+    width:46px; height:46px;
+    opacity:0.85;
+  }
+  .corner svg{ width:100%; height:100%; }
+  .c-tl{ top:10px; left:10px; }
+  .c-tr{ top:10px; right:10px; transform:scaleX(-1); }
+  .c-bl{ bottom:10px; left:10px; transform:scaleY(-1); }
+  .c-br{ bottom:10px; right:10px; transform:scale(-1,-1); }
+
+  .eyebrow{
+    font-family:'Cinzel', serif;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    font-size:0.68rem;
+    color:var(--gold-soft);
+    margin-bottom:10px;
+  }
+
+  .headline{
+    font-family:'Cinzel Decorative', 'Cinzel', serif;
+    font-weight:700;
+    color:var(--gold-light);
+    font-size:1.5rem;
+    line-height:1.3;
+    margin:6px 0 14px;
+    text-shadow:0 0 18px rgba(212,175,55,0.25);
+  }
+
+  .cover .headline{ font-size:1.8rem; }
+  .cover .name{
+    font-family:'Cinzel Decorative', serif;
+    font-size:2.4rem;
+    color:var(--gold);
+    margin-top:8px;
+    text-shadow:0 0 24px rgba(212,175,55,0.4);
+  }
+
+  .icon{
+    font-size:2.1rem;
+    margin-bottom:6px;
+    filter:drop-shadow(0 0 10px rgba(212,175,55,0.35));
+  }
+
+  .body-text{
+    font-size:1.15rem;
+    line-height:1.65;
+    color:var(--cream);
+    font-style:italic;
+    font-weight:400;
+    max-width:92%;
+  }
+
+  .tanglish{
+    font-family:'Cormorant Garamond','Noto Sans Tamil', serif;
+  }
+
+  .sub{
+    font-family:'Cinzel', serif;
+    font-size:0.85rem;
+    letter-spacing:0.08em;
+    color:var(--gold-soft);
+    margin-top:16px;
+  }
+
+  .divider{
+    width:70px;
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:14px auto;
+  }
+
+  .photo{
+    width:100%;
+    max-width:160px;
+    max-height:160px;
+    flex-shrink:0;
+    border-radius:14px;
+    border:2px solid var(--gold);
+    box-shadow:0 12px 30px rgba(0,0,0,0.5), 0 0 0 4px rgba(212,175,55,0.15);
+    object-fit:cover;
+    margin:4px 0 14px;
+  }
+  @media (max-height:640px){
+    .photo{ max-width:160px; max-height:160px; margin:2px 0 10px; }
+  }
+
+  /* video slide */
+  .video-slide{ padding:0; overflow:hidden; }
+  .video-bg-wrap{
+    position:absolute; inset:0;
+    z-index:0;
+  }
+  .video-bg-wrap video{
+    width:100%; height:100%;
+    object-fit:cover;
+    opacity:0.35;
+  }
+  .video-fallback{
+    position:absolute; inset:0;
+    display:none;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(212,175,55,0.25), transparent 45%),
+      radial-gradient(circle at 70% 80%, rgba(212,175,55,0.18), transparent 45%),
+      var(--maroon);
+  }
+  .video-fallback span{
+    position:absolute;
+    width:4px;height:4px;
+    background:var(--gold-light);
+    border-radius:50%;
+    opacity:0.5;
+    animation:twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:0.15; transform:scale(1);}
+    50%{ opacity:0.8; transform:scale(1.6);}
+  }
+  .video-content{
+    position:relative; z-index:1;
+    padding:34px 30px;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    height:100%;
+    background:linear-gradient(180deg, rgba(44,5,16,0.15), rgba(44,5,16,0.75) 70%, var(--maroon-deep));
+  }
+
+  /* nav controls */
+  .nav-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:42px; height:42px;
+    border-radius:50%;
+    border:1.5px solid var(--gold);
+    background:rgba(74,14,28,0.7);
+    color:var(--gold-light);
+    font-size:1.1rem;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    z-index:5;
+    transition:background 0.2s, transform 0.2s;
+    user-select:none;
+  }
+  .nav-btn:hover{ background:rgba(212,175,55,0.25); }
+  .nav-btn:active{ transform:translateY(-50%) scale(0.92); }
+  .nav-prev{ left:-54px; }
+  .nav-next{ right:-54px; }
+
+  @media (max-width:640px){
+    .nav-prev{ left:6px; }
+    .nav-next{ right:6px; }
+    .nav-btn{ background:rgba(20,3,8,0.55); width:36px; height:36px; font-size:1rem; }
+  }
+
+  @media (max-width:420px){
+    .slide{ padding:28px 20px; border-radius:18px; }
+    .headline{ font-size:1.25rem; }
+    .cover .headline{ font-size:1.5rem; }
+    .cover .name{ font-size:1.9rem; }
+    .icon{ font-size:1.7rem; }
+    .body-text{ font-size:1.02rem; }
+    .corner{ width:34px; height:34px; }
+    .eyebrow{ font-size:0.6rem; }
+    .sub{ font-size:0.75rem; }
+    .hint{ font-size:0.55rem; }
+  }
+
+  @media (max-height:640px){
+    .card-wrap{ max-height:520px; }
+    .headline{ font-size:1.15rem; }
+    .cover .name{ font-size:1.7rem; }
+    .body-text{ font-size:0.95rem; line-height:1.5; }
+    .icon{ font-size:1.5rem; margin-bottom:2px; }
+    .divider{ margin:8px auto; }
+  }
+
+  .dots{
+    position:absolute;
+    bottom:-34px;
+    left:0; right:0;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    z-index:5;
+  }
+  .dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:rgba(212,175,55,0.3);
+    transition:background 0.25s, transform 0.25s;
+  }
+  .dot.active{
+    background:var(--gold);
+    transform:scale(1.4);
+  }
+
+  .hint{
+    position:absolute;
+    bottom:-64px;
+    left:0; right:0;
+    text-align:center;
+    font-family:'Cinzel', serif;
+    font-size:0.6rem;
+    letter-spacing:0.12em;
+    color:rgba(250,241,222,0.35);
+    text-transform:uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="dust" id="dust"></div>
+
+<div class="stage">
+  <div class="card-wrap">
+
+    <button class="nav-btn nav-prev" onclick="goTo(current-1)" aria-label="Previous">❮</button>
+    <button class="nav-btn nav-next" onclick="goTo(current+1)" aria-label="Next">❯</button>
+
+    <!-- 1: Cover -->
+    <div class="slide active cover">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">👑</div>
+      <div class="headline">To the most adorable, cute,<br>kind &amp; bestest girl<br>I've ever known&hellip; ✨</div>
+      <div class="divider"></div>
+      <div class="name">Happy Birthday,<br>Priya 🎂💛</div>
+    </div>
+
+    <!-- 2: Private note -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🤍</div>
+      <div class="eyebrow">Just between us</div>
+      <div class="body-text tanglish">
+        Hey Priya, idhu chance kekurathu illa, en love expression-um illa. 🤍<br><br>
+        Idha nee mattum dhaan paakanum &mdash; please yaarukkum share pannadha.<br><br>
+        Idhu naan unna oru manushiya evlo mathikuren nu sollara oru chinna try.<br><br>
+        Ennaku pudicha vishayangal mattum dhaan idhula potu irukken.<br>
+        Nalla illa-nu thonna, thittadha pa 😅
+      </div>
+    </div>
+
+    <!-- 3: Not an effort -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🎁</div>
+      <div class="body-text tanglish">
+        Idha oru effort-nu nenaikaathe 😊<br><br>
+        Nee thaane kettadhu, un birthday-ku ipdi onnu pannu-nu.<br><br>
+        Idha andha present-aa nenachiko. 💫
+      </div>
+    </div>
+
+    <!-- 4: Header: Things I love -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">💛</div>
+      <div class="eyebrow">A Little List</div>
+      <div class="headline">Things I Love<br>Most About You</div>
+      <div class="sub">(in no particular order)</div>
+    </div>
+
+    <!-- 5: Point 1 - Voice -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🎙️</div>
+      <div class="headline">Your Voice</div>
+      <div class="divider"></div>
+      <div class="body-text">You know how much I admire your voice &mdash; that soft, cute, slightly baby-ish tone that's completely, uniquely yours. That's exactly why I always ask for a voice message instead of a plain text. 🥹</div>
+    </div>
+
+    <!-- 6: Point 2 - Character -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🌸</div>
+      <div class="headline">Your Character</div>
+      <div class="divider"></div>
+      <div class="body-text">Honestly, there's little I need to add here. Everyone who truly knows you, knows exactly who you are &mdash; kind, loving, treating everyone as equal, with a childlike warmth that's rare. People can't help but be drawn to you. ✨</div>
+    </div>
+
+    <!-- 7: Point 3 - Worth -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">👑</div>
+      <div class="headline">Remember Your Worth</div>
+      <div class="divider"></div>
+      <div class="body-text">Please don't ever say you're not worthy of this. You know exactly what you're capable of &mdash; please don't underestimate yourself, in any situation. Please, always remember who you are. 🤍</div>
+    </div>
+
+    <!-- 8: Point 4 - Laugh -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">😂</div>
+      <div class="headline">That Laugh</div>
+      <div class="divider"></div>
+      <div class="body-text">That random, unnecessary laugh you break into in almost every situation &mdash; it will always be one of my favorite things about you.</div>
+    </div>
+
+    <!-- 9: Point 5 - video background -->
+    <div class="slide video-slide">
+      <div class="video-bg-wrap">
+        <video autoplay muted loop playsinline preload="auto" id="bgVideo">
+          <!-- DUMMY placeholder clip — replace this src with your own downloaded video file -->
+          <source src="./video.MP4" type="video/MP4">
+        </video>
+      </div>
+      <div class="video-fallback" id="videoFallback"></div>
+      <div class="video-content">
+        <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+        <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+        <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+        <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+        <div class="icon">💛</div>
+        <div class="headline">You'll Always Be Mine</div>
+        <div class="divider"></div>
+        <div class="body-text tanglish">Nee epavum ennoda kolandha dhaan &mdash; indha thing yeppavume maaradhu.<br><br>Nee sollalam, "naan ippo antha aal illai" nu &mdash; aana please purinjuko, nee eppavume en first girl child dhaan. 👶💛</div>
+      </div>
+    </div>
+
+    <!-- 10: Header: What you've taught me -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🌿</div>
+      <div class="eyebrow">Because Of You</div>
+      <div class="headline">What You've Taught Me<br>&amp; Changed in Me</div>
+    </div>
+
+    <!-- 11: Anger -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🔥</div>
+      <div class="headline">Handling My Anger</div>
+      <div class="divider"></div>
+      <div class="body-text">Everyone knows I'm strict, quick-tempered, and always ready to stand up for something I believe is right. You changed that in me &mdash; you taught me to handle these moments so much better.</div>
+    </div>
+
+    <!-- 12: How to behave -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🙏</div>
+      <div class="headline">How to Really Behave</div>
+      <div class="divider"></div>
+      <div class="body-text">This is honestly the best thing I've ever learned from you &mdash; how to behave with people, with grace.</div>
+    </div>
+
+    <!-- 13: Patience -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🌾</div>
+      <div class="headline">Patience</div>
+      <div class="divider"></div>
+      <div class="body-text">I never quite knew how to use patience wisely before. I'm still learning it &mdash; but you're the reason I'm even trying.</div>
+    </div>
+
+    <!-- 14: My people -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🤝</div>
+      <div class="headline">Finding My People Again</div>
+      <div class="divider"></div>
+      <div class="body-text">I'm slowly getting back the people I lost during the phase when I lost myself &mdash; and lost you too.</div>
+    </div>
+
+    <!-- 15: Advice -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">💛</div>
+      <div class="headline">Your Advice</div>
+      <div class="divider"></div>
+      <div class="body-text">The advice you gave me, again and again, helped me more than you probably know. I know I mostly focused on your safety &mdash; how you dressed, who you were around &mdash; but you worked on every part of me, quietly helping me become a better person.</div>
+    </div>
+
+    <!-- 16: Header: Our Happy Moments -->
+    <div class="slide video-slide">
+      <div class="video-bg-wrap">
+        <video autoplay muted loop playsinline preload="auto" id="bgVideo2">
+          <!-- DUMMY placeholder clip — replace this src with your own downloaded video file -->
+          <source src="./video1.MP4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-fallback" id="videoFallback2"></div>
+      <div class="video-content">
+        <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+        <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+        <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+        <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+        <div class="icon">💫</div>
+        <div class="eyebrow">Just Us</div>
+        <div class="headline">Our Happy Moments</div>
+      </div>
+    </div>
+
+    <!-- 17: Marina Mall to Vivira -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🚶</div>
+      <div class="headline">Marina Mall to Vivira</div>
+      <div class="divider"></div>
+      <div class="body-text">Our very first outing — walking from Marina Mall to Vivira. That was the first time we were truly alone together, and we spent such valuable time. I remember being so shy to even hold your hand. 🥲</div>
+    </div>
+
+    <!-- 18: First chats -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">💬</div>
+      <div class="headline">Those First Chats</div>
+      <div class="divider"></div>
+      <div class="body-text">Our early WhatsApp conversations were pure gold. I know I'll never get another chance quite like that again — two almost-strangers slowly becoming close to each other.</div>
+    </div>
+
+    <!-- 19: Beach days -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🌊</div>
+      <div class="headline">Beach Days</div>
+      <div class="divider"></div>
+      <div class="body-text">Lying on your thighs, holding your hand just below our shoulders — I miss that hold so much right now.</div>
+    </div>
+
+    <!-- 20: Not a request -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🤍</div>
+      <div class="headline">Not a Request, Just the Truth</div>
+      <div class="divider"></div>
+      <!-- DUMMY placeholder photo — replace this src with your own photo -->
+      <img class="photo" src="./image.JPG" alt="Us together" onerror="this.style.display='none'">
+      <div class="body-text">Please don't take this as me forcing anything. I'm just telling you what I feel inside. I honestly still don't know if this will work out for me or not — but you are always my better half, Priya. The one person who knows me completely, and knows exactly how to handle me.<br>I always come to you, in every up and down. You've been there through all my tears, my struggles, the hardest phases of my life. Whatever change you see in me now — it's only because of you.</div>
+    </div>
+
+    <!-- 21: Thank you -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">💛</div>
+      <div class="headline">Thank You, Priya</div>
+      <div class="divider"></div>
+      <div class="body-text">Thank you for this phase of my life. I don't want it to end. You know that really well — but that part is entirely in your hands. Yes i cant accept if your decision wont favour me because I Loved you Very much. Once again, thank you for everything, Priya. 💛</div>
+    </div>
+
+    <!-- 22: Closing -->
+    <div class="slide">
+      <div class="corner c-tl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 C 2 20, 2 36, 20 36" stroke="#d4af37" stroke-width="1.4" fill="none"/><path d="M2 2 C 20 2, 36 2, 36 20" stroke="#d4af37" stroke-width="1.4" fill="none"/><circle cx="2" cy="2" r="3" fill="#d4af37"/><path d="M8 8 C 8 16, 14 20, 18 14 C 22 8, 16 4, 8 8 Z" fill="#d4af37" opacity="0.55"/></svg></div>
+      <div class="icon">🎉</div>
+      <div class="headline">Happy Birthday,<br>Priya</div>
+      <div class="divider"></div>
+      <div class="body-text">I hope this year brings you everything you deserve. 👑💛</div>
+    </div>
+
+    <div class="dots" id="dots"></div>
+    <div class="hint">Swipe or use the arrows</div>
+  </div>
+</div>
+
+<script>
+  // build dust particles
+  const dustEl = document.getElementById('dust');
+  for(let i=0;i<28;i++){
+    const s = document.createElement('span');
+    s.style.left = Math.random()*100+'%';
+    s.style.bottom = (Math.random()*20)+'px';
+    s.style.animationDelay = (Math.random()*9)+'s';
+    s.style.animationDuration = (7+Math.random()*6)+'s';
+    dustEl.appendChild(s);
+  }
+
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  const dotsWrap = document.getElementById('dots');
+  slides.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.addEventListener('click', ()=>goTo(i));
+    dotsWrap.appendChild(d);
+  });
+  const dotEls = dotsWrap.querySelectorAll('.dot');
+
+  function goTo(idx){
+    if(idx===current) return;
+    if(idx<0) idx = 0;
+    if(idx>total-1) idx = total-1;
+
+    const from = slides[current];
+    const to = slides[idx];
+
+    from.classList.add('turn-out');
+    to.classList.add('active','turn-in');
+
+    setTimeout(()=>{
+      from.classList.remove('active','turn-out');
+      to.classList.remove('turn-in');
+      current = idx;
+      dotEls.forEach((d,i)=>d.classList.toggle('active', i===current));
+      to.querySelectorAll('video').forEach(v=> v.play().catch(()=>{}));
+    }, 500);
+  }
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='ArrowRight') goTo(current+1);
+    if(e.key==='ArrowLeft') goTo(current-1);
+  });
+
+  // touch swipe
+  let touchStartX = 0;
+  const stage = document.querySelector('.stage');
+  stage.addEventListener('touchstart', e=> touchStartX = e.changedTouches[0].screenX);
+  stage.addEventListener('touchend', e=>{
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if(Math.abs(dx) > 40){
+      if(dx<0) goTo(current+1); else goTo(current-1);
+    }
+  });
+
+  // video fallback handling: if no source is added, hide the empty video and show the animated fallback
+  document.querySelectorAll('.video-slide').forEach(slide=>{
+    const bgVideo = slide.querySelector('.video-bg-wrap video');
+    const fallback = slide.querySelector('.video-fallback');
+    function showFallback(){
+      bgVideo.style.display = 'none';
+      fallback.style.display = 'block';
+      for(let i=0;i<18;i++){
+        const s = document.createElement('span');
+        s.style.left = Math.random()*100+'%';
+        s.style.top = Math.random()*100+'%';
+        s.style.animationDelay = (Math.random()*3.5)+'s';
+        fallback.appendChild(s);
+      }
+    }
+    if(!bgVideo.querySelector('source')){
+      showFallback();
+    } else {
+      bgVideo.addEventListener('error', showFallback);
+    }
+  });
+</script>
+</body>
+</html>
